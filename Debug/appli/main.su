@@ -1,3 +1,0 @@
-main.c:17:6:writeLED	16	static
-main.c:23:6:process_ms	4	static
-main.c:30:5:main	48	static
