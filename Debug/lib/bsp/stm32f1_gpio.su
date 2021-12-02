@@ -1,0 +1,2 @@
+stm32f1_gpio.c:44:6:BSP_GPIO_Enable	40	static
+stm32f1_gpio.c:67:6:BSP_GPIO_PinCfg	40	static
