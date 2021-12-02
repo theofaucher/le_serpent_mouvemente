@@ -57,6 +57,8 @@ int main(void)
 		{
 			t = 150;
 			MPU6050_ReadAccelerometer(&datas);
+			printf("Accelerometer X: %d\n", datas.Accelerometer_X);
+			printf("Accelerometer Y: %d\n", datas.Accelerometer_Y);
 			HAL_GPIO_TogglePin(LED_GREEN_GPIO, LED_GREEN_PIN);
 		}
 
