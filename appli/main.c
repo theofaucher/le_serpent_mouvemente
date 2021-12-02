@@ -57,8 +57,10 @@ int main(void)
 		{
 			t = 150;
 			MPU6050_ReadAccelerometer(&datas);
-			printf("Accelerometer X: %d\n", datas.Accelerometer_X);
-			printf("Accelerometer Y: %d\n", datas.Accelerometer_Y);
+			if(datas.Accelerometer_Y < -1500) printf("Penche a gauche\n");
+			else if(datas.Accelerometer_Y > 1500) printf("Penche a droite\n");
+			else if(datas.Accelerometer_X < -1500) printf("Penche en avant\n");
+			else if(datas.Accelerometer_X > 1500) printf("Penche en arriere\n");
 			HAL_GPIO_TogglePin(LED_GREEN_GPIO, LED_GREEN_PIN);
 		}
 
