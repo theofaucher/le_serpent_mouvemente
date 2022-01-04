@@ -15,6 +15,8 @@
 #include "MPU6050/stm32f1_mpu6050.h"
 #include "accelerometer/accelerometer.h"
 #include "snake/snake.h"
+#include "snake/initialisation.h"
+#include "matrix_led_32_32.h"
 
 void writeLED(bool_e b);
 void process_ms(void);
@@ -27,7 +29,6 @@ int main(void)
 	//Initialisation de la couche logicielle HAL (Hardware Abstraction Layer)
 	//Cette ligne doit rester la premi�re �tape de la fonction main().
 	HAL_Init();
-	MPU6050_t *datas = accelerometer_init();
 	//Initialisation de l'UART2 � la vitesse de 115200 bauds/secondes (92kbits/s) PA2 : Tx  | PA3 : Rx.
 		//Attention, les pins PA2 et PA3 ne sont pas reli�es jusqu'au connecteur de la Nucleo.
 		//Ces broches sont redirig�es vers la sonde de d�bogage, la liaison UART �tant ensuite encapsul�e sur l'USB vers le PC de d�veloppement.
@@ -42,6 +43,7 @@ int main(void)
 	//On ajoute la fonction process_ms � la liste des fonctions appel�es automatiquement chaque ms par la routine d'interruption du p�riph�rique SYSTICK
 	Systick_add_callback_function(&process_ms);
 
+	vector_t vector = logoInitialisation();
 
 	while(1)	//boucle de t�che de fond
 	{
@@ -51,6 +53,7 @@ int main(void)
 			HAL_GPIO_TogglePin(LED_GREEN_GPIO, LED_GREEN_PIN);
 		}
 
+		MATRIX_display(vectorToMatrix(&vector));
 	}
 }
 

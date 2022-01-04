@@ -121,7 +121,7 @@
 #define USE_MATRIX_KEYBOARD		0
 #define USE_MATRIX_LED			0
 #define USE_CAPACITIVE_KEYBOARD	0
-#define USE_MATRIX_LED_32_32	0
+#define USE_MATRIX_LED_32_32	1
 #define USE_FINGERPRINT			0
 
 #define USE_MCP23S17			0 //Port expander I/O en SPI
