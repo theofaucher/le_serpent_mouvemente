@@ -20,7 +20,6 @@ void writeLED(bool_e b);
 void process_ms(void);
 
 static volatile uint32_t t = 0;
-static snake_t snake;
 
 int main(void)
 {
@@ -49,20 +48,10 @@ int main(void)
 		if(!t)
 		{
 			t = 100;
-			measureToDirection(accelerometer_measure(datas), snake);
-			if(snake.SNAKE_direction == SNAKE_left) printf("Penche a gauche\n");
-			else if(snake.SNAKE_direction == SNAKE_right) printf("Penche a droite\n");
-			else if(snake.SNAKE_direction == SNAKE_forward) printf("Penche en avant\n");
-			else if(snake.SNAKE_direction == SNAKE_backward) printf("Penche en arriere\n");
 			HAL_GPIO_TogglePin(LED_GREEN_GPIO, LED_GREEN_PIN);
 		}
 
 	}
-}
-
-void writeLED(bool_e b)
-{
-	HAL_GPIO_WritePin(LED_GREEN_GPIO, LED_GREEN_PIN, b);
 }
 
 void process_ms(void)

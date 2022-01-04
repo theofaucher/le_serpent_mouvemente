@@ -10,8 +10,8 @@
 #include "stm32f1xx_hal.h"
 
 //Choix de la cible utilis�e.
-#define NUCLEO	1
-#define BLUEPILL 0
+#define NUCLEO	0
+#define BLUEPILL 1
 
 #define MY_BLUEPILL_IS_COUNTERFEIT	BLUEPILL
 
@@ -71,15 +71,15 @@
 	//Ces configurations permettent d'activer les entr�es analogiques souhait�es.
 	//16 entr�es analogiques peuvent �tre activ�es maximum.
 	//2 entr�es analogiques doivent �tre activ�es minimum. (Vref est un choix possible si vous utilisez une seule entr�e)
-	#define USE_AN0			1	//Broche correspondante : PA0
-	#define USE_AN1			1	//Broche correspondante : PA1
+	#define USE_AN0			0	//Broche correspondante : PA0
+	#define USE_AN1			0	//Broche correspondante : PA1
 	#define USE_AN2			0	//Broche correspondante : PA2	//Sur la Nucleo, cette broche n'est pas c�bl�e !
 	#define USE_AN3			0	//Broche correspondante : PA3	//Sur la Nucleo, cette broche n'est pas c�bl�e !
 	#define USE_AN4			0	//Broche correspondante : PA4
 	#define USE_AN5			0	//Broche correspondante : PA5
 	#define USE_AN6			0	//Broche correspondante : PA6
 	#define USE_AN7			0	//Broche correspondante : PA7
-	#define USE_AN8			0	//Broche correspondante : PB0
+	#define USE_AN8			1	//Broche correspondante : PB0
 	#define USE_AN9			0	//Broche correspondante : PB1
 	#define USE_AN10		0	//Broche correspondante : PC0	//Sur la Bluepill, cette broche n'est pas c�bl�e !
 	#define USE_AN11		0	//Broche correspondante : PC1	//Sur la Bluepill, cette broche n'est pas c�bl�e !
@@ -175,7 +175,7 @@
 #endif
 #define I2C_TIMEOUT				5	//ms
 
-#define I2C1_ON_PB6_PB7			0
+#define I2C1_ON_PB6_PB7			1
 
 //Liste des modules utilisant le p�riph�rique SPI
 #if USE_SCREEN_TFT_ILI9341	|| USE_SD_CARD
