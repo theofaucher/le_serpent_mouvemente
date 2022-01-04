@@ -18,7 +18,6 @@
 #include "snake/initialisation.h"
 #include "matrix_led_32_32.h"
 
-void writeLED(bool_e b);
 void process_ms(void);
 
 static volatile uint32_t t = 0;
@@ -43,7 +42,6 @@ int main(void)
 	//On ajoute la fonction process_ms � la liste des fonctions appel�es automatiquement chaque ms par la routine d'interruption du p�riph�rique SYSTICK
 	Systick_add_callback_function(&process_ms);
 
-	vector_t vector = logoInitialisation();
 
 	while(1)	//boucle de t�che de fond
 	{
@@ -52,8 +50,6 @@ int main(void)
 			t = 100;
 			HAL_GPIO_TogglePin(LED_GREEN_GPIO, LED_GREEN_PIN);
 		}
-
-		MATRIX_display(vectorToMatrix(&vector));
 	}
 }
 
