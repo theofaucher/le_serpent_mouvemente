@@ -16,6 +16,12 @@ vector_t newVector(uint16_t capacite){
 	return vector;
 }
 
+void newVector2(vector_t *vector, uint16_t capacite){
+	vector->array = malloc((capacite + 1) * sizeof(*vector->array));
+	vector->taille = 0;
+	vector->capacite = capacite;
+}
+
 void deletePixel(vector_t *vector){
 	free(vector->array);
 }

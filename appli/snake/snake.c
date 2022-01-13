@@ -10,6 +10,13 @@
 #include "macro_types.h"
 #include <stdbool.h>
 
+void newSnake(snake_t *snake){
+	snake->score = 0;
+	snake->SNAKE_direction = SNAKE_right;
+	snake->snake = malloc(sizeof(vector_t));
+	newVector2(getVector(snake), 961);
+}
+
 void appleSpawn(snake_t *snake){
 	bool pixelAlreadyOn = false;
 	srand(0);
@@ -26,7 +33,9 @@ void appleSpawn(snake_t *snake){
 }
 
 void snakeSpawn(snake_t *snake){
-	addPixelToVector(snake->snake, newPixel(15, 15, COLOR_RED));
+	addPixelToVector(snake->snake, newPixel(17, 15, COLOR_RED));
+	addPixelToVector(snake->snake, newPixel(16, 15, COLOR_GREEN));
+	addPixelToVector(snake->snake, newPixel(15, 15, COLOR_GREEN));
 	addPixelToVector(snake->snake, newPixel(14, 15, COLOR_GREEN));
 	addPixelToVector(snake->snake, newPixel(13, 15, COLOR_GREEN));
 }
@@ -49,6 +58,15 @@ void snakeDeplacement(snake_t *snake){
 
 bool isAppleEaten(snake_t *snake){
 	return getPositionXPixel(getFirst(snake->snake)) == getPositionXPixel(getFirst(snake->apple)) && getPositionYPixel(getFirst(snake->snake)) == getPositionYPixel(getFirst(snake->apple));
+}
+
+bool isDead(snake_t *snake){
+	pixel_t *pixel = getFirst(snake->snake);
+	for(uint16_t index = 1; index < snake->snake->taille - 1; index ++){
+		if(getPositionXPixel(pixel) == getPositionXPixel(getPixel(snake->snake, index)) && getPositionYPixel(pixel) == getPositionYPixel(getPixel(snake->snake, index))) return 1;
+	}
+	if(getPositionXPixel(pixel) == 0 || getPositionXPixel(pixel) == 31 || getPositionYPixel(pixel) == 0 || getPositionYPixel(pixel) == 31) return 1;
+	return 0;
 }
 
 void snakeEatApple(snake_t *snake){
@@ -88,4 +106,8 @@ void setSnakeDirection(snake_t *snake, MPU6050_t *datas){
 	else if(datas->Accelerometer_X < -1500) snake->SNAKE_direction = SNAKE_forward;
 	else if(datas->Accelerometer_X > 1500) snake->SNAKE_direction = SNAKE_backward;
 	else snake->SNAKE_direction = SNAKE_stay;
+}
+
+vector_t *getVector(snake_t *snake){
+	return snake->snake;
 }

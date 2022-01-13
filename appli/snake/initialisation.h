@@ -9,8 +9,8 @@
 #define INITIALISATION_H_
 #include "../utils/vector.h"
 
-vector_t sapin(void);
-vector_t wallCreation(void);
+void wallCreation(vector_t *wall);
+//vector_t wallCreation(void);
 vector_t logoInitialisation(void);
 
 #endif /* INITIALISATION_H_ */

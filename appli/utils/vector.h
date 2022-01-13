@@ -26,6 +26,7 @@ typedef struct {
 } vector_t;
 
 vector_t newVector(uint16_t capacite);
+void newVector2(vector_t *vector, uint16_t capacite);
 pixel_t newPixel(uint8_t position_y, uint8_t position_x, color_t color);
 void setColorPixel(pixel_t *pixel, color_t color);
 void setPositionsPixel(pixel_t *pixel, uint8_t position_x, uint8_t position_y);

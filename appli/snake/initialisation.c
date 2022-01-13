@@ -8,15 +8,23 @@
 #include "initialisation.h"
 #include "matrix_led_32_32.h"
 
-vector_t wallCreation(void){
-	vector_t wall = newVector(190);
-	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(0, index, COLOR_GREEN));
-	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(index, 0, COLOR_GREEN));
+//vector_t wallCreation(void){
+//	vector_t wall = newVector(190);
+//	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(0, index, COLOR_GREEN));
+//	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(index, 0, COLOR_GREEN));
+//
+//	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(index, 31, COLOR_GREEN));
+//	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(31, index, COLOR_GREEN));
+//
+//	return wall;
+//}
 
-	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(index, 31, COLOR_GREEN));
-	for(uint8_t index = 0; index < 32; index++) addPixelToVector(&wall, newPixel(31, index, COLOR_GREEN));
+void wallCreation(vector_t *wall){
+	for(uint8_t index = 0; index < 32; index++) addPixelToVector(wall, newPixel(0, index, COLOR_GREEN));
+	for(uint8_t index = 0; index < 32; index++) addPixelToVector(wall, newPixel(index, 0, COLOR_GREEN));
 
-	return wall;
+	for(uint8_t index = 0; index < 32; index++) addPixelToVector(wall, newPixel(index, 31, COLOR_GREEN));
+	for(uint8_t index = 0; index < 32; index++) addPixelToVector(wall, newPixel(31, index, COLOR_GREEN));
 }
 
 vector_t logoInitialisation(void){

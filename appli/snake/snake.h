@@ -27,16 +27,18 @@ typedef struct {
 	pixel_t *apple;
 } snake_t;
 
+void newSnake(snake_t *snake);
 void measureToDirection(snake_t *snake, MPU6050_t *datas);
 void snakeSpawn(snake_t *snake);
 void snakeEatApple(snake_t *snake);
 bool isAppleEaten(snake_t *snake);
 void appleSpawn(snake_t *snake);
 void snakeDeplacement(snake_t *snake);
-void isDead(void);
+bool isDead(snake_t *snake);
 
 snake_direction_e getSnakeDirection(snake_t *snake);
-void setSnakeDirection(snake_t *snake, snake_direction_e direction);
+void setSnakeDirection(snake_t *snake, MPU6050_t *datas);
+vector_t *getVector(snake_t *snake);
 
 
 #endif /* SNAKE_SNAKE_H_ */
