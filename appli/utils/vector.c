@@ -10,14 +10,14 @@
 
 vector_t newVector(uint16_t capacite){
 	vector_t vector;
-	vector.array = malloc((capacite + 1) * sizeof(*vector.array));
+	vector.array = malloc((uint16_t)(capacite + 1) * sizeof(*vector.array));
 	vector.taille = 0;
 	vector.capacite = capacite;
 	return vector;
 }
 
 void newVector2(vector_t *vector, uint16_t capacite){
-	vector->array = malloc((capacite + 1) * sizeof(*vector->array));
+	vector->array = malloc((uint16_t)(capacite + 1) * sizeof(*vector->array));
 	vector->taille = 0;
 	vector->capacite = capacite;
 }
@@ -70,6 +70,9 @@ void setPixelStatus(pixel_t *pixel, bool status){
 	pixel->visible = status;
 }
 
+bool_e isPixelVisible(pixel_t *pixel){
+	return pixel->visible == 1;
+}
 pixel_t *getPixel(vector_t *vector, uint16_t position){
 	return &vector->array[position];
 }
@@ -88,6 +91,14 @@ uint8_t getPositionXPixel(pixel_t *pixel){
 
 uint8_t getPositionYPixel(pixel_t *pixel){
 	return pixel->position_y;
+}
+
+color_t getPixelColor(pixel_t *pixel){
+	return pixel->color;
+}
+
+uint16_t getVectorLength(vector_t *vector){
+	return vector->taille;
 }
 
 void filterColor(vector_t *vector, bool type, color_t color){

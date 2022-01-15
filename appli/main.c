@@ -20,7 +20,8 @@
 #include "snake/snake.h"
 
 static volatile uint32_t t = 0;
-//static MPU6050_t datas;
+static volatile uint32_t a = 0;
+static MPU6050_t datas;
 static snake_t *snake;
 
 static void state_machine(void);
@@ -68,7 +69,7 @@ static void state_machine(void){
 		switch(state)
 		{
 			case INIT:
-//				ACCELEROMETER_init(&datas);
+				ACCELEROMETER_init(&datas);
 				MATRIX_init();
 				Systick_add_callback_function(&process_ms);
 				state = SHAKE_TO_START;	//le mode par d�faut au d�marrage.
@@ -80,11 +81,20 @@ static void state_machine(void){
 				if(entrance)
 				{
 					newSnake(snake);
-					wallCreation(getVector(snake));
 					snakeSpawn(snake);
 				}
 
-				MATRIX_display(vectorToMatrix(getVector(snake)));
+				accelerometer_measure(&datas);
+				setSnakeDirection(snake, &datas);
+
+				if(a == 0) {
+					a = 250;
+					snakeDeplacement(snake);
+				}
+
+//				if(isDead(snake)) state = GAMEOVER;
+
+				printVectorWithFusion(getSnake(snake), getWall(snake));
 				break;
 			case GAMEOVER:
 				state = SHAKE_TO_START;
@@ -98,4 +108,6 @@ void process_ms(void)
 {
 	if(t)
 		t--;
+	if(a)
+		a--;
 }

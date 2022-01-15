@@ -24,6 +24,7 @@ typedef struct {
 	uint8_t score;
 	snake_direction_e SNAKE_direction;
 	vector_t *snake;
+	vector_t *wall;
 	pixel_t *apple;
 } snake_t;
 
@@ -38,7 +39,8 @@ bool isDead(snake_t *snake);
 
 snake_direction_e getSnakeDirection(snake_t *snake);
 void setSnakeDirection(snake_t *snake, MPU6050_t *datas);
-vector_t *getVector(snake_t *snake);
+vector_t *getSnake(snake_t *snake);
+vector_t *getWall(snake_t *snake);
 
 
 #endif /* SNAKE_SNAKE_H_ */
