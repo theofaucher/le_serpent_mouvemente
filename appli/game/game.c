@@ -22,6 +22,7 @@ void newGame(game_t *game){
 	newVector2(getWall(game), 150);
 	wallCreation(getWall(game));
 	game->apple = malloc(sizeof(pixel_t));
+	newPixel2(getApple(game), 16, 16, COLOR_RED);
 }
 
 void appleSpawn(game_t *game){

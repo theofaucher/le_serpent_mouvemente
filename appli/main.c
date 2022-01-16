@@ -82,9 +82,8 @@ static void state_machine(void){
 				{
 					newGame(game);
 					snakeSpawn(game);
-//					appleSpawn(snake);
+					appleSpawn(game);
 //					addPixelToVector(getWall(snake), *snake->apple);
-					newPixel2(getApple(game), 17, 12, COLOR_RED);
 				}
 
 				accelerometer_measure(&datas);
@@ -95,6 +94,7 @@ static void state_machine(void){
 					snakeDeplacement(game);
 					if(isAppleEaten(game) == true){
 						appleSpawn(game);
+						snakeEatApple(game);
 					}
 				}
 
