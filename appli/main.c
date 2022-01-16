@@ -6,6 +6,8 @@
   * @brief   Default main function.
   ******************************************************************************
 */
+#include <game/game.h>
+#include <game/initialisation.h>
 #include "stm32f1xx_hal.h"
 #include "stm32f1_uart.h"
 #include "stm32f1_sys.h"
@@ -14,14 +16,12 @@
 #include "systick.h"
 #include "utils/vector.h"
 #include "matrix/matrix.h"
-#include "snake/initialisation.h"
 #include <stdlib.h>
-#include "snake/snake.h"
 
 static volatile uint32_t t = 0;
 static volatile uint32_t a = 0;
 static MPU6050_t datas;
-static snake_t *snake;
+static game_t *game;
 
 static void state_machine(void);
 void process_ms(void);
@@ -38,7 +38,7 @@ int main(void)
 	//On ajoute la fonction process_ms � la liste des fonctions appel�es automatiquement chaque ms par la routine d'interruption du p�riph�rique SYSTICK
 	Systick_add_callback_function(&process_ms);
 
-	snake = malloc(sizeof(snake_t));
+	game = malloc(sizeof(game_t));
 
 	while(1)	//boucle de t�che de fond
 	{
@@ -80,27 +80,27 @@ static void state_machine(void){
 			case PLAY_A_GAME:
 				if(entrance)
 				{
-					newSnake(snake);
-					snakeSpawn(snake);
+					newGame(game);
+					snakeSpawn(game);
 //					appleSpawn(snake);
 //					addPixelToVector(getWall(snake), *snake->apple);
-					newPixel2(getApple(snake), 17, 12, COLOR_RED);
+					newPixel2(getApple(game), 17, 12, COLOR_RED);
 				}
 
 				accelerometer_measure(&datas);
-				setSnakeDirection(snake, &datas);
+				setSnakeDirection(game, &datas);
 
 				if(a == 0) {
 					a = 250;
-					snakeDeplacement(snake);
-					if(isAppleEaten(snake) == true){
-						appleSpawn(snake);
+					snakeDeplacement(game);
+					if(isAppleEaten(game) == true){
+						appleSpawn(game);
 					}
 				}
 
-				if(isDead(snake)) state = GAMEOVER;
+				if(isDead(game)) state = GAMEOVER;
 
-				printVectorWithFusionWithAnotherPixel(getSnake(snake), getWall(snake), getApple(snake));
+				printGame(game);
 				break;
 			case GAMEOVER:
 				state = SHAKE_TO_START;

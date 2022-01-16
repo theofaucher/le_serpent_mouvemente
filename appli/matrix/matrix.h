@@ -9,6 +9,7 @@
 #define MATRIX_H_
 
 #include "../utils/vector.h"
+
 #include "matrix_led_32_32.h"
 
 void printVector(vector_t *vector);

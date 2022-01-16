@@ -5,7 +5,7 @@
  *      Author: theof
  */
 
-#include "initialisation.h"
+#include <game/initialisation.h>
 #include "matrix_led_32_32.h"
 
 //vector_t wallCreation(void){
