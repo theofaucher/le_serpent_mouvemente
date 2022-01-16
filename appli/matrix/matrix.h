@@ -13,5 +13,6 @@
 
 void printVector(vector_t *vector);
 void printVectorWithFusion(vector_t *vector, vector_t *vector_bis);
+void printVectorWithFusionWithAnotherPixel(vector_t *vector, vector_t *vector_bis, pixel_t *another_pixel);
 
 #endif /* MATRIX_H_ */

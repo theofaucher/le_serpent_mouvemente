@@ -12,7 +12,6 @@
 #include "stm32f1_gpio.h"
 #include "macro_types.h"
 #include "systick.h"
-#include "matrix_led_32_32.h"
 #include "utils/vector.h"
 #include "matrix/matrix.h"
 #include "snake/initialisation.h"
@@ -71,6 +70,7 @@ static void state_machine(void){
 			case INIT:
 				ACCELEROMETER_init(&datas);
 				MATRIX_init();
+				ADC_init();
 				Systick_add_callback_function(&process_ms);
 				state = SHAKE_TO_START;	//le mode par d�faut au d�marrage.
 				break;
@@ -82,6 +82,9 @@ static void state_machine(void){
 				{
 					newSnake(snake);
 					snakeSpawn(snake);
+//					appleSpawn(snake);
+//					addPixelToVector(getWall(snake), *snake->apple);
+					newPixel2(getApple(snake), 17, 12, COLOR_RED);
 				}
 
 				accelerometer_measure(&datas);
@@ -90,11 +93,14 @@ static void state_machine(void){
 				if(a == 0) {
 					a = 250;
 					snakeDeplacement(snake);
+					if(isAppleEaten(snake) == true){
+						appleSpawn(snake);
+					}
 				}
 
-//				if(isDead(snake)) state = GAMEOVER;
+				if(isDead(snake)) state = GAMEOVER;
 
-				printVectorWithFusion(getSnake(snake), getWall(snake));
+				printVectorWithFusionWithAnotherPixel(getSnake(snake), getWall(snake), getApple(snake));
 				break;
 			case GAMEOVER:
 				state = SHAKE_TO_START;

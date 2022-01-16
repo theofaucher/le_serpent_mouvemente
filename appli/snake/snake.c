@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "macro_types.h"
 #include <stdbool.h>
+#include "stm32f1_gpio.h"
+#include "stm32f1_adc.h"
 
 void newSnake(snake_t *snake){
 	snake->score = 0;
@@ -16,22 +18,32 @@ void newSnake(snake_t *snake){
 	snake->snake = malloc(sizeof(vector_t));
 	newVector2(getSnake(snake), 961);
 	snake->wall = malloc(sizeof(vector_t));
-	newVector2(snake->wall, 150);
-	wallCreation(snake->wall);
+	newVector2(getWall(snake), 150);
+	wallCreation(getWall(snake));
+	snake->apple = malloc(sizeof(pixel_t));
 }
 
 void appleSpawn(snake_t *snake){
 	bool pixelAlreadyOn = false;
-	srand(0);
-	do{
-		snake->apple->position_x = (uint8_t)rand() % 31;
-		snake->apple->position_y = (uint8_t)rand() % 31;
+	bool pixelAlreadyOn_bis = false;
 
+	do{
+//		newPixel2(snake->apple, 8, 8, COLOR_RED);
+		srand(ADC_getValue(ADC_8));
+		setPositionXPixel(snake->apple, (uint8_t)(rand() % 30 + 1));
+		srand(ADC_getValue(ADC_9));
+		setPositionYPixel(snake->apple, (uint8_t)(rand() % 30 + 1));
 		for(uint8_t index = 0; index < 32; index++){
 			if(getPixel(snake->snake, index)->position_x == snake->apple->position_x || getPixel(snake->snake, index)->position_y == snake->apple->position_y) pixelAlreadyOn = true;
 			else pixelAlreadyOn = false;
 		}
-	} while(pixelAlreadyOn);
+
+		for(uint16_t index = 0; index < getVectorLength(getSnake(snake)); index++){
+			if(getPositionXPixel(getPixel(getSnake(snake), index)) == snake->apple->position_x || getPositionYPixel(getPixel(getSnake(snake), index)) == snake->apple->position_y) pixelAlreadyOn_bis = true;
+			else pixelAlreadyOn_bis = false;
+		}
+
+	} while(pixelAlreadyOn && pixelAlreadyOn_bis);
 
 }
 
@@ -62,8 +74,10 @@ void snakeDeplacement(snake_t *snake){
 	}
 }
 
-bool isAppleEaten(snake_t *snake){
-	return getPositionXPixel(getFirst(snake->snake)) == getPositionXPixel(getFirst(snake->apple)) && getPositionYPixel(getFirst(snake->snake)) == getPositionYPixel(getFirst(snake->apple));
+bool_e isAppleEaten(snake_t *snake){
+//	bool_e test = getPositionXPixel(getFirst(getSnake(snake))) == getPositionXPixel(snake->apple) && getPositionYPixel(getFirst(getSnake(snake))) == getPositionYPixel(snake->apple);
+//	return test;
+	return getPositionXPixel(getFirst(getSnake(snake))) == getPositionXPixel(snake->apple) && getPositionYPixel(getFirst(getSnake(snake))) == getPositionYPixel(snake->apple);
 }
 
 bool isDead(snake_t *snake){
@@ -119,4 +133,8 @@ vector_t *getSnake(snake_t *snake){
 
 vector_t *getWall(snake_t *snake){
 	return snake->wall;
+}
+
+pixel_t *getApple(snake_t *snake){
+	return snake->apple;
 }

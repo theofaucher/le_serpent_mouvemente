@@ -32,7 +32,7 @@ void newSnake(snake_t *snake);
 void measureToDirection(snake_t *snake, MPU6050_t *datas);
 void snakeSpawn(snake_t *snake);
 void snakeEatApple(snake_t *snake);
-bool isAppleEaten(snake_t *snake);
+bool_e isAppleEaten(snake_t *snake);
 void appleSpawn(snake_t *snake);
 void snakeDeplacement(snake_t *snake);
 bool isDead(snake_t *snake);
@@ -41,6 +41,7 @@ snake_direction_e getSnakeDirection(snake_t *snake);
 void setSnakeDirection(snake_t *snake, MPU6050_t *datas);
 vector_t *getSnake(snake_t *snake);
 vector_t *getWall(snake_t *snake);
+pixel_t *getApple(snake_t *snake);
 
 
 #endif /* SNAKE_SNAKE_H_ */
