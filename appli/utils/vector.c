@@ -10,24 +10,48 @@
 
 vector_t newVector(uint16_t capacite){
 	vector_t vector;
-	vector.array = malloc((capacite + 1) * sizeof(*vector.array));
+	vector.array = malloc((uint16_t)(capacite + 1) * sizeof(*vector.array));
 	vector.taille = 0;
 	vector.capacite = capacite;
 	return vector;
 }
 
-void deletePixel(vector_t *vector){
-	free(vector->array);
+void newVector2(vector_t *vector, uint16_t capacite){
+	vector->array = malloc((uint16_t)(capacite + 1) * sizeof(*vector->array));
+	vector->taille = 0;
+	vector->capacite = capacite;
+}
+
+void resetVector(vector_t *vector){
+	vector->taille = 0;
 }
 
 pixel_t newPixel(uint8_t position_x, uint8_t position_y, color_t color){
 	pixel_t pixel;
 	pixel.visible = 1;
-	pixel.position_x = position_x;
-	pixel.position_y = position_y;
+
+	if(position_x > 31)	pixel.position_x = 31;
+	else pixel.position_x = position_x;
+
+	if(position_y > 31)	pixel.position_y = 31;
+	else pixel.position_y = position_y;
+
+
 	pixel.color = color;
 
 	return pixel;
+}
+
+void newPixel2(pixel_t *pixel, uint8_t position_x, uint8_t position_y, color_t color){
+	pixel->visible = 1;
+
+	if(position_x > 31)	pixel->position_x = 31;
+	else pixel->position_x = position_x;
+
+	if(position_y > 31)	pixel->position_y = 31;
+	else pixel->position_y = position_y;
+
+	pixel->color = color;
 }
 
 void setColorPixel(pixel_t *pixel, color_t color){
@@ -35,21 +59,35 @@ void setColorPixel(pixel_t *pixel, color_t color){
 }
 
 void setPositionsPixel(pixel_t *pixel, uint8_t position_x, uint8_t position_y){
-	pixel->position_x = position_x;
-	pixel->position_y = position_y;
+	if(position_x > 31)	pixel->position_x = 31;
+	else pixel->position_x = position_x;
+
+	if(position_y > 31)	pixel->position_y = 31;
+	else pixel->position_y = position_y;
 }
 
 void setPositionXPixel(pixel_t *pixel, uint8_t position_x){
-	pixel->position_x = position_x;
+	if(position_x > 31)	pixel->position_x = 31;
+		else pixel->position_x = position_x;
 }
 
 void setPositionYPixel(pixel_t *pixel, uint8_t position_y){
-	pixel->position_y = position_y;
+	if(position_y > 31)	pixel->position_y = 31;
+	else pixel->position_y = position_y;
 }
 
 void addPixelToVector(vector_t *vector, pixel_t pixel){
 	if(vector->taille + 1 < vector->capacite){
 		setPixel(vector, &pixel, vector->taille++);
+	} else {
+		pixel_t alertNoFreeSpace = newPixel(31, 31, COLOR_RED);
+		setPixel(vector, &alertNoFreeSpace, vector->taille++);
+	}
+}
+
+void addPixelToVectorP(vector_t *vector, pixel_t *pixel){
+	if(vector->taille + 1 < vector->capacite){
+		setPixel(vector, pixel, vector->taille++);
 	} else {
 		pixel_t alertNoFreeSpace = newPixel(31, 31, COLOR_RED);
 		setPixel(vector, &alertNoFreeSpace, vector->taille++);
@@ -64,6 +102,9 @@ void setPixelStatus(pixel_t *pixel, bool status){
 	pixel->visible = status;
 }
 
+bool_e isPixelVisible(pixel_t *pixel){
+	return pixel->visible == 1;
+}
 pixel_t *getPixel(vector_t *vector, uint16_t position){
 	return &vector->array[position];
 }
@@ -82,6 +123,22 @@ uint8_t getPositionXPixel(pixel_t *pixel){
 
 uint8_t getPositionYPixel(pixel_t *pixel){
 	return pixel->position_y;
+}
+
+color_t getPixelColor(pixel_t *pixel){
+	return pixel->color;
+}
+
+pixel_t *getPixelWithPos(vector_t *vector, uint8_t position_x, uint8_t position_y){
+	for(uint16_t index = 0; index < getVectorLength(vector); index ++){
+		pixel_t *pixel = getPixel(vector, index);
+		if(getPositionXPixel(pixel) == position_x && getPositionYPixel(pixel) == position_y) return pixel;
+	}
+	return getFirst(vector);
+}
+
+uint16_t getVectorLength(vector_t *vector){
+	return vector->taille;
 }
 
 void filterColor(vector_t *vector, bool type, color_t color){

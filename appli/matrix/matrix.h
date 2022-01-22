@@ -9,8 +9,11 @@
 #define MATRIX_H_
 
 #include "../utils/vector.h"
+
 #include "matrix_led_32_32.h"
 
-color_t *vectorToMatrix(vector_t *vector);
+void printVector(vector_t *vector);
+void printVectorWithFusion(vector_t *vector, vector_t *vector_bis);
+void printVectorWithFusionWithAnotherPixel(vector_t *vector, vector_t *vector_bis, pixel_t *another_pixel);
 
 #endif /* MATRIX_H_ */
