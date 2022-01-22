@@ -10,7 +10,8 @@
 
 #include "MPU6050/stm32f1_mpu6050.h"
 
-void accelerometer_measure(MPU6050_t *datas);
-void ACCELEROMETER_init(MPU6050_t *datas);
+void ACCELEROMETER_measure(MPU6050_t *datas);
+void GYROSCOPE_measure(MPU6050_t *datas);
+void MPU6050_init(MPU6050_t *datas);
 
 #endif /* ACCELEROMETER_H_ */

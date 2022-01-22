@@ -25,10 +25,13 @@ typedef struct {
 	snake_direction_e SNAKE_direction;
 	vector_t *snake;
 	vector_t *wall;
+	vector_t *animation;
 	pixel_t *apple;
 } game_t;
 
 void newGame(game_t *game);
+void mallocGame(game_t *game);
+void freeGame(game_t *game);
 void measureToDirection(game_t *game, MPU6050_t *datas);
 void snakeSpawn(game_t *game);
 void snakeEatApple(game_t *game);
@@ -40,9 +43,11 @@ void printGame(game_t *game);
 
 snake_direction_e getSnakeDirection(game_t *game);
 void setSnakeDirection(game_t *game, MPU6050_t *datas);
+void setSnakeScore(game_t *game, uint16_t score);
+uint16_t getSnakeScore(game_t *game);
 vector_t *getSnake(game_t *game);
 vector_t *getWall(game_t *game);
 pixel_t *getApple(game_t *game);
-
+vector_t *getAnimation(game_t *game);
 
 #endif /* GAME_GAME_H_ */
