@@ -22,6 +22,8 @@ typedef enum {
 
 typedef struct {
 	uint8_t score;
+	int16_t threesholdX;
+	int16_t threesholdY;
 	snake_direction_e SNAKE_direction;
 	vector_t *snake;
 	vector_t *wall;
@@ -49,5 +51,8 @@ vector_t *getSnake(game_t *game);
 vector_t *getWall(game_t *game);
 pixel_t *getApple(game_t *game);
 vector_t *getAnimation(game_t *game);
+void setThreesholdsDirection(game_t *game, int16_t threesholdX, int16_t threesholdY);
+int16_t getThreesholdXDirection(game_t *game);
+int16_t getThreesholdYDirection(game_t *game);
 
 #endif /* GAME_GAME_H_ */

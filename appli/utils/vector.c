@@ -16,7 +16,7 @@ vector_t newVector(uint16_t capacite){
 	return vector;
 }
 
-void newVector2(vector_t *vector, uint16_t capacite){
+void newVectorP(vector_t *vector, uint16_t capacite){
 	vector->array = malloc((uint16_t)(capacite + 1) * sizeof(*vector->array));
 	vector->taille = 0;
 	vector->capacite = capacite;
@@ -42,7 +42,7 @@ pixel_t newPixel(uint8_t position_x, uint8_t position_y, color_t color){
 	return pixel;
 }
 
-void newPixel2(pixel_t *pixel, uint8_t position_x, uint8_t position_y, color_t color){
+void newPixelP(pixel_t *pixel, uint8_t position_x, uint8_t position_y, color_t color){
 	pixel->visible = 1;
 
 	if(position_x > 31)	pixel->position_x = 31;
@@ -77,7 +77,7 @@ void setPositionYPixel(pixel_t *pixel, uint8_t position_y){
 }
 
 void addPixelToVector(vector_t *vector, pixel_t pixel){
-	if(vector->taille + 1 < vector->capacite){
+	if(vector->taille < vector->capacite){
 		setPixel(vector, &pixel, vector->taille++);
 	} else {
 		pixel_t alertNoFreeSpace = newPixel(31, 31, COLOR_RED);
@@ -86,7 +86,7 @@ void addPixelToVector(vector_t *vector, pixel_t pixel){
 }
 
 void addPixelToVectorP(vector_t *vector, pixel_t *pixel){
-	if(vector->taille + 1 < vector->capacite){
+	if(vector->taille < vector->capacite){
 		setPixel(vector, pixel, vector->taille++);
 	} else {
 		pixel_t alertNoFreeSpace = newPixel(31, 31, COLOR_RED);
@@ -98,7 +98,7 @@ void setPixel(vector_t *vector, pixel_t *pixel, uint16_t position){
 	if(position <= vector->taille) vector->array[position] = *pixel;
 }
 
-void setPixelStatus(pixel_t *pixel, bool status){
+void setPixelVisibility(pixel_t *pixel, bool_e status){
 	pixel->visible = status;
 }
 
@@ -143,11 +143,11 @@ uint16_t getVectorLength(vector_t *vector){
 
 void filterColor(vector_t *vector, bool type, color_t color){
 	for(uint16_t i = 0; i < vector->taille; i++){
-		if(type == 1 && vector->array[i].color != color) setPixelStatus(getPixel(vector, i), 0);
-		else if (type == 0 && vector->array[i].color == color) setPixelStatus(getPixel(vector, i), 0);
+		if(type == 1 && vector->array[i].color != color) setPixelVisibility(getPixel(vector, i), 0);
+		else if (type == 0 && vector->array[i].color == color) setPixelVisibility(getPixel(vector, i), 0);
 	}
 }
 
 void filterColumnMinMax(vector_t *vector, uint8_t column_min, uint8_t column_max){
-	for(uint16_t i = 0; i < vector->taille; i++) if(getPixel(vector, i)->position_x <= column_min && getPixel(vector, i)->position_x >= column_max ) setPixelStatus(&vector->array[i], 0);
+	for(uint16_t i = 0; i < vector->taille; i++) if(getPixel(vector, i)->position_x <= column_min && getPixel(vector, i)->position_x >= column_max ) setPixelVisibility(&vector->array[i], 0);
 }
