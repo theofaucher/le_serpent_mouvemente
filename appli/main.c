@@ -115,7 +115,11 @@ static void state_machine(void){
 				if(activation_time_remaning && timer_counter == 1) decounterSkake3(getAnimation(game));
 				if(activation_time_remaning && timer_counter == 2) decounterSkake2(getAnimation(game));
 				if(activation_time_remaning && timer_counter == 3) decounterSkake1(getAnimation(game));
-				if(activation_time_remaning && timer_counter == 4) state = PLAY_A_GAME;
+				if(activation_time_remaning && timer_counter == 4) {
+					ACCELEROMETER_measure(&datas);
+					setThreesholdsDirection(game, datas.Accelerometer_X, datas.Accelerometer_Y);
+					state = PLAY_A_GAME;
+				}
 
 				printVector(getAnimation(game));
 
@@ -127,10 +131,9 @@ static void state_machine(void){
 					appleSpawn(game);
 				}
 
-				ACCELEROMETER_measure(&datas);
-
 				if(a == 0) {
 					a = 250;
+					ACCELEROMETER_measure(&datas);
 					setSnakeDirection(game, &datas);
 					snakeDeplacement(game);
 					if(isAppleEaten(game) == true){

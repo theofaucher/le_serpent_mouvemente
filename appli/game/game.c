@@ -22,18 +22,18 @@ void newGame(game_t *game){
 void mallocGame(game_t *game){
 
 	game->animation = malloc(sizeof(vector_t));
-	newVector2(game->animation, 500);
+	newVectorP(game->animation, 500);
 
 	game->snake = malloc(sizeof(vector_t));
-	newVector2(getSnake(game), 961);
+	newVectorP(getSnake(game), 961);
 
 	game->wall = malloc(sizeof(vector_t));
-	newVector2(getWall(game), 150);
+	newVectorP(getWall(game), 150);
 
 	wallCreation(getWall(game));
 
 	game->apple = malloc(sizeof(pixel_t));
-	newPixel2(getApple(game), 16, 16, COLOR_RED);
+	newPixelP(getApple(game), 16, 16, COLOR_RED);
 
 }
 
@@ -179,10 +179,10 @@ uint16_t getSnakeScore(game_t *game){
 
 
 void setSnakeDirection(game_t *game, MPU6050_t *datas){
-	if(datas->Accelerometer_Y < -1200) game->SNAKE_direction = SNAKE_left;
-	else if(datas->Accelerometer_Y > 1200) game->SNAKE_direction = SNAKE_right;
-	else if(datas->Accelerometer_X < -1200) game->SNAKE_direction = SNAKE_backward;
-	else if(datas->Accelerometer_X > 1200) game->SNAKE_direction = SNAKE_forward;
+	if((datas->Accelerometer_Y - getThreesholdYDirection(game)) < -1200) game->SNAKE_direction = SNAKE_left;
+	else if((datas->Accelerometer_Y - getThreesholdYDirection(game)) > 1200) game->SNAKE_direction = SNAKE_right;
+	else if((datas->Accelerometer_X - getThreesholdXDirection(game)) < -1200) game->SNAKE_direction = SNAKE_backward;
+	else if((datas->Accelerometer_X - getThreesholdXDirection(game)) > 1200) game->SNAKE_direction = SNAKE_forward;
 }
 
 vector_t *getSnake(game_t *game){
@@ -203,4 +203,17 @@ pixel_t *getApple(game_t *game){
 
 void printGame(game_t *game){
 	printVectorWithFusionWithAnotherPixel(getSnake(game), getWall(game), getApple(game));
+}
+
+void setThreesholdsDirection(game_t *game, int16_t threesholdX, int16_t threesholdY){
+	game->threesholdX = threesholdX;
+	game->threesholdY = threesholdY;
+}
+
+int16_t getThreesholdXDirection(game_t *game){
+	return game->threesholdX;
+}
+
+int16_t getThreesholdYDirection(game_t *game){
+	return game->threesholdY;
 }

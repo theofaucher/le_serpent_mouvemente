@@ -1,4 +1,4 @@
-#include "accelerometer.h"
+#include <mpu6050/mpu6050.h>
 
 void ACCELEROMETER_measure(MPU6050_t *datas)
 {

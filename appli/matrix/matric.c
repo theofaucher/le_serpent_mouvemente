@@ -43,7 +43,7 @@ void printVector(vector_t *vector){
 		    {COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK, COLOR_BLACK }
 		};
 
-	for(uint16_t i = 0; i < vector->taille; i++){
+	for(uint16_t i = 0; i < getVectorLength(vector); i++){
 		pixel_t *pixel = getPixel(vector, i);
 		if(isPixelVisible(pixel)){
 			if(getPositionYPixel(pixel) < 16){

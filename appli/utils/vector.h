@@ -26,10 +26,10 @@ typedef struct {
 } vector_t;
 
 vector_t newVector(uint16_t capacite);
-void newVector2(vector_t *vector, uint16_t capacite);
+void newVectorP(vector_t *vector, uint16_t capacite);
 void resetVector(vector_t *vector);
 pixel_t newPixel(uint8_t position_y, uint8_t position_x, color_t color);
-void newPixel2(pixel_t *pixel, uint8_t position_y, uint8_t position_x, color_t color);
+void newPixelP(pixel_t *pixel, uint8_t position_y, uint8_t position_x, color_t color);
 void setColorPixel(pixel_t *pixel, color_t color);
 void setPositionsPixel(pixel_t *pixel, uint8_t position_x, uint8_t position_y);
 void setPositionXPixel(pixel_t *pixel, uint8_t position_x);
@@ -46,7 +46,7 @@ pixel_t *getFirst(vector_t *vector);
 color_t getPixelColor(pixel_t *pixel);
 pixel_t *getPixelWithPos(vector_t *vector, uint8_t position_x, uint8_t position_y);
 uint16_t getVectorLength(vector_t *vector);
-void setPixelStatus(pixel_t *pixel, bool status);
+void setPixelVisibility(pixel_t *pixel, bool_e status);
 void filterColor(vector_t *vector, bool type, color_t color);
 void filterColumnMinMax(vector_t *vector, uint8_t column_min, uint8_t column_max);
 
